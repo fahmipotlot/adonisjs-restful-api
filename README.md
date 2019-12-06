@@ -1,28 +1,39 @@
-# Adonis API application
+# Adonis Simple API application
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+This is my 1st restfull API using AdonisJs
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+Requirements
+1. Node
+2. PgSQL
+3. Postman
+
+API List
+1. Register
+2. Login
+3. Books
+
 
 ## Setup
 
-Use the adonis command to install the blueprint
+setup your database .env
 
-```bash
-adonis new yardstick --api-only
+```js
+DB_CONNECTION=pg
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=secret
+DB_DATABASE=adon
 ```
-
-or manually clone the repo and then run `npm install`.
-
-
-### Migrations
 
 Run the following command to run startup migrations.
 
 ```js
 adonis migration:run
+```
+
+Run the following command to start project.
+
+```js
+adonis serve --dev
 ```
