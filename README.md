@@ -26,6 +26,12 @@ DB_PASSWORD=secret
 DB_DATABASE=adon
 ```
 
+Run the npm install.
+
+```js
+npm install
+```
+
 Run the following command to run startup migrations.
 
 ```js
