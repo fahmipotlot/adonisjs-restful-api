@@ -5,11 +5,33 @@ const { validate } = use('Validator')
     
 class BookController {
     async index ({request, response}) {
-        let pagination = request.only(['page', 'per_page'])
-        const page = pagination.page || 1
-        const per_page = pagination.per_page || 10
+        let params = request.only(['page', 'per_page', 'q', 'sort_field', 'sort_order'])
+        const page = params.page || 1
+        const per_page = params.per_page || 10
+        const q = params.q
+        const sort_field = params.sort_field
+        const sort_order = params.sort_order
 
-        let books = await Book.query().paginate(page, per_page)
+        const query = Book.query()
+
+        // search
+        if (q) {
+            query.whereRaw("title ILIKE ?", [`%${q}%`])
+                .orWhereRaw("isbn ILIKE ?", [`%${q}%`])
+                .orWhereRaw("publisher_name ILIKE ?", [`%${q}%`])
+                .orWhereRaw("author_name ILIKE ?", [`%${q}%`])
+        }
+
+        // sort
+        if (sort_field) {
+            const order = await sort_order == 'asc' ? 'asc' : 'desc';
+            query.orderBy(sort_field, order)
+        } else {
+            query.orderBy('id', 'desc')
+        }
+
+        // paginate
+        const books = await query.paginate(page, per_page)       
 
         return response.json(books)
     }

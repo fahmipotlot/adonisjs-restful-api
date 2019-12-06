@@ -39,9 +39,10 @@ class AuthController {
         let {email, password} = request.all();
 
         try {
-            if (await auth.attempt(email, password)) {
+            let token = await auth.attempt(email, password)
+            if (token) {
                 let user = await User.findBy('email', email)
-                let token = await auth.generate(user)
+                // let token = await auth.generate(user)
 
                 Object.assign(user, token)
                 return response.json(user)
